@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -70,5 +71,14 @@ class HomeController extends Controller
     {
         return view('home.login');
     }
+    // public function logout(Request $request)
+    // {
+    //     Auth::logout(); // 💥 Logs out the current user
+    //     $request->session()->invalidate(); // ❌ Clears session data
+    //     $request->session()->regenerateToken(); // 🔒 Creates a new CSRF token
+
+    //     return redirect()->route('login'); // 🔁 Redirect back to login page
+    // }
+
 
 }

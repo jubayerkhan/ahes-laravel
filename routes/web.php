@@ -2,29 +2,30 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\AuthenticateAdmin;
 use Illuminate\Support\Facades\Route;
 
-// 🌐 Main website (ahes.test)
+// Main website (ahes.test)
 Route::domain(env("APP_DOMAIN"))->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::middleware('auth')->get('/contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('/know', [HomeController::class, 'know'])->name('know');
     Route::get('/service', [HomeController::class, 'service'])->name('service');
+    
+
+
+    // User Authentication Routes
+    Route::get('/login', [UserAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [UserAuthController::class, 'login'])->name('login.post');
+
+    Route::get('/register', [UserAuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [UserAuthController::class, 'register'])->name('register.post');
+
     Route::middleware('auth')->group(function () {
-        Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+        Route::get('/logout', [UserAuthController::class, 'logout'])->name('logout');
     });
-
-
-    // 🧍 User Authentication Routes
-    Route::get('/login', [\App\Http\Controllers\Auth\UserAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [\App\Http\Controllers\Auth\UserAuthController::class, 'login'])->name('login.post');
-
-    Route::get('/register', [\App\Http\Controllers\Auth\UserAuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [\App\Http\Controllers\Auth\UserAuthController::class, 'register'])->name('register.post');
-
-    Route::post('/logout', [\App\Http\Controllers\Auth\UserAuthController::class, 'logout'])->name('logout');
 });
 
 // Admin subdomain (admin.ahes.test)
