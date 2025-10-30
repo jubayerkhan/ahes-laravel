@@ -13,8 +13,6 @@ Route::domain(env("APP_DOMAIN"))->group(function () {
     Route::middleware('auth')->get('/contact', [HomeController::class, 'contact'])->name('contact');
     Route::get('/know', [HomeController::class, 'know'])->name('know');
     Route::get('/service', [HomeController::class, 'service'])->name('service');
-    
-
 
     // User Authentication Routes
     Route::get('/login', [UserAuthController::class, 'showLoginForm'])->name('login');
